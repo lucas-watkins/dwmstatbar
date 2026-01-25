@@ -34,7 +34,7 @@ public:
     static constexpr icon_t battery_warning{"󰂃"};
     static constexpr icon_t battery_unknown{"󰂑"};
 
-    static constexpr icon_t coressponding_battery_icon(int /* Bat % */, bool /* Charging? */);
+    static icon_t corresponding_battery_icon(int /* Bat % */, bool /* Charging? */);
 };
 
 #endif //DWMBAR_WIDGETS_HPP

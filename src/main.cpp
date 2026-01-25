@@ -11,23 +11,19 @@
 #include <unistd.h>
 #include <numeric>
 #include <sstream>
-#include "icons.hpp"
+#include "icon.hpp"
 #include "config.hpp"
 
-// This variable has to be mutable for the signal handler to work
-/* NOSONAR */ static Display *display{XOpenDisplay(nullptr)};
-
-[[noreturn]] void signal_handler(int /* ignored */) {
-    XCloseDisplay(display);
-    std::exit(0);
-}
-
 int main() {
+    Display *display{XOpenDisplay(nullptr)};
 
     if (!display) {
         std::cerr << "dwmstatbar: Could not open display\n";
         return 1;
     }
+
+    static bool dwmstatbar_run{true};
+    auto signal_handler{[](int /* ignored */) {dwmstatbar_run = false;}};
 
     // We'll still close the display if we get killed
     std::signal(SIGINT, signal_handler);
@@ -38,24 +34,23 @@ int main() {
 
     std::stringstream ss{};
 
-    while (true) {
+    while (dwmstatbar_run) {
         cfg::get_status_string(ss);
 
         // Get a guaranteed null terminated string
-        ss << static_cast<char>(0);
+        ss << '\0';
 
-        XStoreName(display, root_window, ss.view().data());
+        XStoreName(display, root_window, &ss.view()[0]);
 
         // Syncs our changes to the X server without closing the display.
         XSync(display, false);
 
         // Clear stream
-        ss.ignore(std::numeric_limits<std::streamsize>::max());
+        ss.str(std::string{});
 
         sleep(cfg::update_time_period_sec);
     }
 
-    // Unreached
     XCloseDisplay(display);
     return 0;
 }

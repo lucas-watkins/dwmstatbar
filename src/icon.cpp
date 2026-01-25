@@ -1,7 +1,7 @@
-#include "icons.hpp"
+#include "icon.hpp"
 #include <array>
 
-constexpr icon::icon_t icon::coressponding_battery_icon(const int battery_percentage, const bool is_charging) {
+icon::icon_t icon::corresponding_battery_icon(const int battery_percentage, const bool is_charging) {
     if (battery_percentage < 0 || battery_percentage > 100) {
         return battery_unknown;
     }
@@ -21,7 +21,7 @@ constexpr icon::icon_t icon::coressponding_battery_icon(const int battery_percen
     };
 
     constexpr std::array icon_table {
-        battery_10,
+        battery_warning, // Warning that your laptop's battery is about to die
         battery_10,
         battery_20,
         battery_30,
