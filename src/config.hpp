@@ -1,6 +1,7 @@
 #ifndef DWMBAR_CONFIG_HPP
 #define DWMBAR_CONFIG_HPP
 
+#include <string_view>
 #include "icon.hpp"
 #include "time.hpp"
 #include "battery.hpp"
@@ -12,7 +13,7 @@ public:
     static constexpr std::size_t update_time_period_sec{10};
 
     // How dwmstatbar should format the time and date
-    static constexpr std::string_view date_time_format{"%I:%M %p %m/%d/%Y"};
+    inline static const std::string date_time_format{"%I:%M %p %m/%d/%Y"};
 
     // What directory should dwmstatbar look to for getting battery information.
     // Delete or leave empty if you don't have a battery.

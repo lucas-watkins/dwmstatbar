@@ -9,7 +9,7 @@
 
 class time {
 public:
-    static std::string get_time(std::string_view /* time format */);
+    static std::string get_time(const std::string& /* time format */);
 };
 
 
