@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 4.1)
 project(dwmstatbar)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Delete the build directory with CMakeCache.txt in it to reapply options
